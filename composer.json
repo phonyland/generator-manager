@@ -1,0 +1,65 @@
+{
+    "name": "phonyland/generator-manager",
+    "description": "Generator Manager \ud83e\udde9 for Phony Framework",
+    "license": "MIT",
+    "type": "composer-plugin",
+    "authors": [
+        {
+            "name": "Yunus Emre Delig\u00f6z",
+            "email": "ye@deligoz.me"
+        }
+    ],
+    "homepage": "http://phony.land",
+    "require": {
+        "php": "^8.0",
+        "composer-plugin-api": "^2.0"
+    },
+    "require-dev": {
+        "composer/composer": "^2.0",
+        "phonyland/dev-tools": "dev-master"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Phonyland\\GeneratorManager\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Phonyland\\GeneratorManager\\Tests\\": "tests"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true,
+            "infection/extension-installer": true,
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true,
+            "symfony/thanks": true
+        },
+        "sort-packages": true
+    },
+    "extra": {
+        "class": "Phonyland\\GeneratorManager\\Manager"
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@normalize",
+            "@validate",
+            "@thanks"
+        ],
+        "lint": "php-cs-fixer fix -v",
+        "normalize": "@composer normalize --ansi --no-interaction --quiet",
+        "test": [
+            "@test:lint",
+            "@test:types",
+            "@test:unit"
+        ],
+        "test:lint": "php-cs-fixer fix -v --dry-run",
+        "test:types": "phpstan analyse --ansi --memory-limit=-1",
+        "test:unit": "pest --colors=always",
+        "thanks": "@composer thanks --ansi --no-interaction --quiet",
+        "validate": "@composer validate --strict --ansi --no-interaction"
+    }
+}
