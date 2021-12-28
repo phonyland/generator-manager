@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Composer\Factory;
 use Composer\IO\NullIO;
 use Phonyland\GeneratorManager\Manager;
@@ -18,4 +20,11 @@ it('removes the cached generators file on uninstall', function () {
     $this->manager->uninstall($this->composer, $this->io);
 
     $this->assertFileDoesNotExist('vendor/phonyland-generators.json');
+});
+
+it('should create the cached generators file', function () {
+    $this->manager->activate($this->composer, $this->io);
+    $this->manager->registerGenerators();
+
+    $this->assertFileExists('vendor/phonyland-generators.json');
 });
