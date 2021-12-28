@@ -8,5 +8,9 @@ namespace Phonyland\GeneratorManager\Commands;
  */
 final class DumpCommand extends BaseCommand
 {
+    protected function configure(): void
+    {
+        $this->setName('phonyland:dump-generators');
+    }
 
 }
