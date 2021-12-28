@@ -32,3 +32,19 @@ it('should find a single generator with one generator class', function () {
 
     $this->assertContains(Generator1::class, $generators);
 });
+
+it('should find a single generator with multiple generator classes', function () {
+    fakeGenerator('phonyland/generator1', [Generator1::class, Generator2::class]);
+
+    $this->dump->run(new ArrayInput([]), new NullOutput());
+
+    $generators = json_decode(
+        json: file_get_contents('vendor/phonyland-generators.json'),
+        associative: true,
+        depth: 1024,
+        flags: JSON_THROW_ON_ERROR
+    );
+
+    $this->assertContains(Generator1::class, $generators);
+    $this->assertContains(Generator2::class, $generators);
+});
