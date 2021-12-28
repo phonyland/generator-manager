@@ -3,12 +3,12 @@
 declare(strict_types=1);
 
 use Phonyland\GeneratorManager\Commands\DumpCommand;
-use Phonyland\GeneratorManager\GeneratorManagerCommandProvider;
+use Phonyland\GeneratorManager\PhonyCommandProvider;
 
-it('exists')->assertTrue(class_exists(GeneratorManagerCommandProvider::class));
+it('exists')->assertTrue(class_exists(PhonyCommandProvider::class));
 
 it('returns the dump command', function () {
-    $commandProvider = new GeneratorManagerCommandProvider();
+    $commandProvider = new PhonyCommandProvider();
     $commands = $commandProvider->getCommands();
 
     $this->assertCount(1, $commands);

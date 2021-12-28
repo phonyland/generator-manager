@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Composer\Factory;
 use Composer\IO\NullIO;
-use Phonyland\GeneratorManager\GeneratorManagerCommandProvider;
+use Phonyland\GeneratorManager\PhonyCommandProvider;
 use Phonyland\GeneratorManager\Manager;
 
 beforeEach(function () {
@@ -35,5 +35,5 @@ it('subscribes for the post-autoload-dump event', function () {
 });
 
 it('has the capability for the dump command', function () {
-    $this->assertContains(GeneratorManagerCommandProvider::class, $this->manager->getCapabilities());
+    $this->assertContains(PhonyCommandProvider::class, $this->manager->getCapabilities());
 });

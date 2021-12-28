@@ -7,7 +7,10 @@ namespace Phonyland\GeneratorManager;
 use Composer\Plugin\Capability\CommandProvider;
 use Phonyland\GeneratorManager\Commands\DumpCommand;
 
-class GeneratorManagerCommandProvider implements CommandProvider
+/**
+ * @internal
+ */
+final class PhonyCommandProvider implements CommandProvider
 {
     /**
      * @return array<int, DumpCommand>

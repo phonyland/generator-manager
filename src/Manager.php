@@ -15,7 +15,10 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class Manager implements PluginInterface, EventSubscriberInterface, Capable
+/**
+ * @internal
+ */
+final class Manager implements PluginInterface, EventSubscriberInterface, Capable
 {
     public const GENERATOR_CACHE_FILE = 'phonyland-generators.json';
 
@@ -38,10 +41,10 @@ class Manager implements PluginInterface, EventSubscriberInterface, Capable
     public function uninstall(Composer $composer, IOInterface $io): void
     {
         $vendorDirectory = $composer->getConfig()->get('vendor-dir');
-        $pluginFile = sprintf('%s/%s', $vendorDirectory, self::GENERATOR_CACHE_FILE);
+        $generatorCacheFile = sprintf('%s/%s', $vendorDirectory, self::GENERATOR_CACHE_FILE);
 
-        if (file_exists($pluginFile)) {
-            unlink($pluginFile);
+        if (file_exists($generatorCacheFile)) {
+            unlink($generatorCacheFile);
         }
     }
 
@@ -65,9 +68,7 @@ class Manager implements PluginInterface, EventSubscriberInterface, Capable
 
     public function getCapabilities(): array
     {
-        return [
-            CommandProvider::class => GeneratorManagerCommandProvider::class,
-        ];
+        return [CommandProvider::class => PhonyCommandProvider::class];
     }
 
     /**
