@@ -7,6 +7,7 @@ namespace Phonyland\GeneratorManager;
 use Composer\Composer;
 use Composer\EventDispatcher\EventSubscriberInterface;
 use Composer\IO\IOInterface;
+use Composer\Plugin\Capability\CommandProvider;
 use Composer\Plugin\Capable;
 use Composer\Plugin\PluginInterface;
 use Phonyland\GeneratorManager\Commands\DumpCommand;
@@ -65,7 +66,7 @@ class Manager implements PluginInterface, EventSubscriberInterface, Capable
     public function getCapabilities(): array
     {
         return [
-            \Composer\Plugin\Capability\CommandProvider::class => PestCommandProvider::class,
+            CommandProvider::class => GeneratorManagerCommandProvider::class,
         ];
     }
 

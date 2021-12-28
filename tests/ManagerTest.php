@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Composer\Factory;
 use Composer\IO\NullIO;
+use Phonyland\GeneratorManager\GeneratorManagerCommandProvider;
 use Phonyland\GeneratorManager\Manager;
 
 beforeEach(function () {
@@ -31,4 +32,8 @@ it('should create the cached generators file', function () {
 
 it('subscribes for the post-autoload-dump event', function () {
     $this->assertArrayHasKey('post-autoload-dump', $this->manager->getSubscribedEvents());
+});
+
+it('has the capability for the dump command', function () {
+    $this->assertContains(GeneratorManagerCommandProvider::class, $this->manager->getCapabilities());
 });
