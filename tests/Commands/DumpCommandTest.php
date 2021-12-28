@@ -84,3 +84,27 @@ it('should find a dev generator', function () {
 
     $this->assertContains(Generator1::class, $generators);
 });
+
+it('should find a generator during development', function () {
+    $composer = test()->composer;
+    $extra = $composer->getPackage()->getExtra();
+
+    $extra['phonyland'] = [
+        'generators' => [
+            Generator3::class,
+        ],
+    ];
+
+    $composer->getPackage()->setExtra($extra);
+
+    $this->dump->run(new ArrayInput([]), new NullOutput());
+
+    $generators = json_decode(
+        json: file_get_contents('vendor/phonyland-generators.json'),
+        associative: true,
+        depth: 1024,
+        flags: JSON_THROW_ON_ERROR
+    );
+
+    $this->assertContains(Generator3::class, $generators);
+});
