@@ -65,3 +65,22 @@ it('should find multiple generators', function () {
     $this->assertContains(Generator1::class, $generators);
     $this->assertContains(Generator2::class, $generators);
 });
+
+it('should find a dev generator', function () {
+    fakeGenerator(
+        generatorName: 'phonyland/generator1',
+        classes: [Generator1::class],
+        dev: true
+    );
+
+    $this->dump->run(new ArrayInput([]), new NullOutput());
+
+    $generators = json_decode(
+        json: file_get_contents('vendor/phonyland-generators.json'),
+        associative: true,
+        depth: 1024,
+        flags: JSON_THROW_ON_ERROR
+    );
+
+    $this->assertContains(Generator1::class, $generators);
+});
