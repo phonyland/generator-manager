@@ -39,7 +39,7 @@ final class DumpCommand extends BaseCommand
 
         /** @var \Composer\Package\PackageInterface $package */
         foreach ($packages as $package) {
-            if (!isset($package->getExtra()['phonyland']['generators'])) {
+            if (! isset($package->getExtra()['phonyland']['generators'])) {
                 continue;
             }
 
@@ -55,5 +55,4 @@ final class DumpCommand extends BaseCommand
 
         return 0;
     }
-
 }

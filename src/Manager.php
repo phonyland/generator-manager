@@ -71,7 +71,7 @@ class Manager implements PluginInterface, EventSubscriberInterface, Capable
 
     /**
      * @inheritdoc
-     *            
+     *
      * @codeCoverageIgnore
      */
     public function deactivate(Composer $composer, IOInterface $io): void
