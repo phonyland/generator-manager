@@ -28,3 +28,7 @@ it('should create the cached generators file', function () {
 
     $this->assertFileExists('vendor/phonyland-generators.json');
 });
+
+it('subscribes for the post-autoload-dump event', function () {
+    $this->assertArrayHasKey('post-autoload-dump', $this->manager->getSubscribedEvents());
+});
