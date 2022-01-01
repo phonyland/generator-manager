@@ -1,8 +1,20 @@
 {
     "name": "phonyland/generator-manager",
-    "description": "Generator Manager \ud83e\udde9 for Phony Framework",
+    "description": "\ud83e\udde9 Generator Manager for \ud83d\ude43 Phony Framework",
     "license": "MIT",
     "type": "composer-plugin",
+    "keywords": [
+        "php",
+        "framework",
+        "phony",
+        "random",
+        "faker",
+        "ngram",
+        "seeding",
+        "generator",
+        "plugin",
+        "manager"
+    ],
     "authors": [
         {
             "name": "Yunus Emre Delig\u00f6z",
