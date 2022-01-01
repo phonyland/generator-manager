@@ -12,7 +12,8 @@
     "homepage": "http://phony.land",
     "require": {
         "php": "^8.0",
-        "composer-plugin-api": "^2.0"
+        "composer-plugin-api": "^2.0",
+        "phonyland/framework": "dev-master"
     },
     "require-dev": {
         "composer/composer": "^2.0",
