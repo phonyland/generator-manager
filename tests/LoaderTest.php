@@ -38,3 +38,10 @@ it('returns multiple generator instances', function () {
     $this->assertInstanceOf(AnotherDummyInterface::class, $generators[0]);
     $this->assertInstanceOf(AnotherDummyInterface::class, $generators[1]);
 });
+
+it('return no generators when plugin cache file is missing', function () {
+    unlink(sprintf('%s/vendor/phonyland-generators.json', getcwd()));
+    $generators = Loader::getGenerators(DummyInterface::class);
+
+    $this->assertEmpty($generators);
+});
