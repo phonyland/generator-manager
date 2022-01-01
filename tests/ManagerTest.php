@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use Composer\Factory;
 use Composer\IO\NullIO;
-use Phonyland\GeneratorManager\PhonyCommandProvider;
 use Phonyland\GeneratorManager\Manager;
+use Phonyland\GeneratorManager\PhonyCommandProvider;
 
 beforeEach(function () {
     $this->manager = new Manager();
