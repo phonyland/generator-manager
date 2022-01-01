@@ -1,6 +1,7 @@
 <?php
 
 use Phonyland\GeneratorManager\Loader;
+use Phonyland\GeneratorManager\Tests\Stubs\AnotherDummyInterface;
 use Phonyland\GeneratorManager\Tests\Stubs\DummyInterface;
 use Phonyland\GeneratorManager\Tests\Stubs\Generator1;
 use Phonyland\GeneratorManager\Tests\Stubs\Generator2;
@@ -28,4 +29,12 @@ it('returns a single generator instance', function () {
 
     $this->assertCount(1, $generators);
     $this->assertInstanceOf(DummyInterface::class, $generators[0]);
+});
+
+it('returns multiple generator instances', function () {
+    $generators = Loader::getGenerators(AnotherDummyInterface::class);
+
+    $this->assertCount(2, $generators);
+    $this->assertInstanceOf(AnotherDummyInterface::class, $generators[0]);
+    $this->assertInstanceOf(AnotherDummyInterface::class, $generators[1]);
 });
