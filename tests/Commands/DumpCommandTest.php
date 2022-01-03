@@ -3,9 +3,9 @@
 use Composer\Factory;
 use Composer\IO\NullIO;
 use Phonyland\GeneratorManager\Commands\DumpCommand;
-use Phonyland\GeneratorManager\Tests\Stubs\Generator1;
-use Phonyland\GeneratorManager\Tests\Stubs\Generator2;
-use Phonyland\GeneratorManager\Tests\Stubs\Generator3;
+use Phonyland\GeneratorManager\Tests\Stubs\GeneratorOne;
+use Phonyland\GeneratorManager\Tests\Stubs\GeneratorTwo;
+use Phonyland\GeneratorManager\Tests\Stubs\GeneratorThree;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 
@@ -19,7 +19,7 @@ beforeEach(function () {
 it('exists')->assertTrue(class_exists(DumpCommand::class));
 
 it('should find a single generator with one generator class', function () {
-    fakeGenerator('phonyland/generator1', [Generator1::class]);
+    fakeGenerator('phonyland/generator-one', [GeneratorOne::class]);
 
     $this->dump->run(new ArrayInput([]), new NullOutput());
 
@@ -30,11 +30,11 @@ it('should find a single generator with one generator class', function () {
         flags: JSON_THROW_ON_ERROR
     );
 
-    $this->assertContains(Generator1::class, $generators);
+    $this->assertContains(GeneratorOne::class, $generators);
 });
 
 it('should find a single generator with multiple generator classes', function () {
-    fakeGenerator('phonyland/generator1', [Generator1::class, Generator2::class]);
+    fakeGenerator('phonyland/generator-one', [GeneratorOne::class, GeneratorTwo::class]);
 
     $this->dump->run(new ArrayInput([]), new NullOutput());
 
@@ -45,13 +45,13 @@ it('should find a single generator with multiple generator classes', function ()
         flags: JSON_THROW_ON_ERROR
     );
 
-    $this->assertContains(Generator1::class, $generators);
-    $this->assertContains(Generator2::class, $generators);
+    $this->assertContains(GeneratorOne::class, $generators);
+    $this->assertContains(GeneratorTwo::class, $generators);
 });
 
 it('should find multiple generators', function () {
-    fakeGenerator('phonyland/generator1', [Generator1::class]);
-    fakeGenerator('phonyland/generator2', [Generator2::class]);
+    fakeGenerator('phonyland/generator-one', [GeneratorOne::class]);
+    fakeGenerator('phonyland/generator-two', [GeneratorTwo::class]);
 
     $this->dump->run(new ArrayInput([]), new NullOutput());
 
@@ -62,14 +62,14 @@ it('should find multiple generators', function () {
         flags: JSON_THROW_ON_ERROR
     );
 
-    $this->assertContains(Generator1::class, $generators);
-    $this->assertContains(Generator2::class, $generators);
+    $this->assertContains(GeneratorOne::class, $generators);
+    $this->assertContains(GeneratorTwo::class, $generators);
 });
 
 it('should find a dev generator', function () {
     fakeGenerator(
-        generatorName: 'phonyland/generator1',
-        classes: [Generator1::class],
+        generatorName: 'phonyland/generator-one',
+        classes: [GeneratorOne::class],
         dev: true
     );
 
@@ -82,7 +82,7 @@ it('should find a dev generator', function () {
         flags: JSON_THROW_ON_ERROR
     );
 
-    $this->assertContains(Generator1::class, $generators);
+    $this->assertContains(GeneratorOne::class, $generators);
 });
 
 it('should find a generator during development', function () {
@@ -91,7 +91,7 @@ it('should find a generator during development', function () {
 
     $extra['phonyland'] = [
         'generators' => [
-            Generator3::class,
+            GeneratorThree::class,
         ],
     ];
 
@@ -106,5 +106,5 @@ it('should find a generator during development', function () {
         flags: JSON_THROW_ON_ERROR
     );
 
-    $this->assertContains(Generator3::class, $generators);
+    $this->assertContains(GeneratorThree::class, $generators);
 });
