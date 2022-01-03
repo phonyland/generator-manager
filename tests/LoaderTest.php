@@ -3,17 +3,17 @@
 use Phonyland\GeneratorManager\Loader;
 use Phonyland\GeneratorManager\Tests\Stubs\AnotherDummyInterface;
 use Phonyland\GeneratorManager\Tests\Stubs\DummyInterface;
-use Phonyland\GeneratorManager\Tests\Stubs\GeneratorOne;
-use Phonyland\GeneratorManager\Tests\Stubs\GeneratorTwo;
-use Phonyland\GeneratorManager\Tests\Stubs\GeneratorThree;
+use Phonyland\GeneratorManager\Tests\Stubs\SampleOneGenerator;
+use Phonyland\GeneratorManager\Tests\Stubs\SampleTwoGenerator;
+use Phonyland\GeneratorManager\Tests\Stubs\SampleThreeGenerator;
 
 beforeEach(function () {
     file_put_contents(
         sprintf('%s/vendor/phonyland-generators.json', getcwd()),
         json_encode([
-            GeneratorOne::class,
-            GeneratorTwo::class,
-            GeneratorThree::class,
+            SampleOneGenerator::class,
+            SampleTwoGenerator::class,
+            SampleThreeGenerator::class,
         ], JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT)
     );
 });
