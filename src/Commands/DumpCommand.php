@@ -49,9 +49,9 @@ final class DumpCommand extends BaseCommand
             foreach ($classNames as $className) {
                 $alias = strtolower(
                     preg_replace(
-                        ["/([A-Z]+)/", "/_([A-Z]+)([A-Z][a-z])/"],
-                        ["_$1", "_$1_$2"],
-                        lcfirst(str_replace( 'Generator', '', substr(strrchr($className, '\\'), 1)))
+                        ['/([A-Z]+)/', '/_([A-Z]+)([A-Z][a-z])/'],
+                        ['_$1', '_$1_$2'],
+                        lcfirst(str_replace('Generator', '', substr(strrchr($className, '\\'), 1)))
                     )
                 );
 

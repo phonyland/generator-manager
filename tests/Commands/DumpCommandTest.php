@@ -4,8 +4,8 @@ use Composer\Factory;
 use Composer\IO\NullIO;
 use Phonyland\GeneratorManager\Commands\DumpCommand;
 use Phonyland\GeneratorManager\Tests\Stubs\SampleOneGenerator;
-use Phonyland\GeneratorManager\Tests\Stubs\SampleTwoGenerator;
 use Phonyland\GeneratorManager\Tests\Stubs\SampleThreeGenerator;
+use Phonyland\GeneratorManager\Tests\Stubs\SampleTwoGenerator;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 

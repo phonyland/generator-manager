@@ -4,8 +4,8 @@ use Phonyland\GeneratorManager\Loader;
 use Phonyland\GeneratorManager\Tests\Stubs\AnotherDummyInterface;
 use Phonyland\GeneratorManager\Tests\Stubs\DummyInterface;
 use Phonyland\GeneratorManager\Tests\Stubs\SampleOneGenerator;
-use Phonyland\GeneratorManager\Tests\Stubs\SampleTwoGenerator;
 use Phonyland\GeneratorManager\Tests\Stubs\SampleThreeGenerator;
+use Phonyland\GeneratorManager\Tests\Stubs\SampleTwoGenerator;
 
 beforeEach(function () {
     file_put_contents(
