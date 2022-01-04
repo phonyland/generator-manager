@@ -43,10 +43,21 @@ final class DumpCommand extends BaseCommand
                 continue;
             }
 
-            $generators[] = $package->getExtra()['phonyland']['generators'];
-        }
+            $classNames = $package->getExtra()['phonyland']['generators'];
 
-        $generators = array_merge(...$generators);
+            // TODO: Refactor alias extraction
+            foreach ($classNames as $className) {
+                $alias = strtolower(
+                    preg_replace(
+                        ["/([A-Z]+)/", "/_([A-Z]+)([A-Z][a-z])/"],
+                        ["_$1", "_$1_$2"],
+                        lcfirst(str_replace( 'Generator', '', substr(strrchr($className, '\\'), 1)))
+                    )
+                );
+
+                $generators[$alias] = $className;
+            }
+        }
 
         file_put_contents(
             filename: implode(DIRECTORY_SEPARATOR, [$vendorDirectory, Manager::GENERATOR_CACHE_FILE]),

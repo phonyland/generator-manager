@@ -45,8 +45,8 @@ it('should find a single generator with multiple generator classes', function ()
         flags: JSON_THROW_ON_ERROR
     );
 
-    $this->assertContains(SampleOneGenerator::class, $generators);
-    $this->assertContains(SampleTwoGenerator::class, $generators);
+    expect($generators)->toMatchArray(['sample_one' => SampleOneGenerator::class]);
+    expect($generators)->toMatchArray(['sample_two' => SampleTwoGenerator::class]);
 });
 
 it('should find multiple generators', function () {
@@ -62,8 +62,8 @@ it('should find multiple generators', function () {
         flags: JSON_THROW_ON_ERROR
     );
 
-    $this->assertContains(SampleOneGenerator::class, $generators);
-    $this->assertContains(SampleTwoGenerator::class, $generators);
+    expect($generators)->toMatchArray(['sample_one' => SampleOneGenerator::class]);
+    expect($generators)->toMatchArray(['sample_two' => SampleTwoGenerator::class]);
 });
 
 it('should find a dev generator', function () {
@@ -82,7 +82,7 @@ it('should find a dev generator', function () {
         flags: JSON_THROW_ON_ERROR
     );
 
-    $this->assertContains(SampleOneGenerator::class, $generators);
+    expect($generators)->toMatchArray(['sample_one' => SampleOneGenerator::class]);
 });
 
 it('should find a generator during development', function () {
@@ -106,5 +106,5 @@ it('should find a generator during development', function () {
         flags: JSON_THROW_ON_ERROR
     );
 
-    $this->assertContains(SampleThreeGenerator::class, $generators);
+    expect($generators)->toMatchArray(['sample_three' => SampleThreeGenerator::class]);
 });
