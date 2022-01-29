@@ -6,9 +6,6 @@ namespace Phonyland\GeneratorManager;
 
 use JsonException;
 
-/**
- * @internal
- */
 final class Container
 {
     /**
