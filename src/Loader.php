@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Phonyland\GeneratorManager;
 
 use JsonException;
-use Phonyland\Framework\Container;
 
 /**
  * @internal
@@ -30,7 +29,6 @@ final class Loader
      * Returns an array of phony generator instances to execute.
      *
      * @return array<string, object> a list of generators
-     *
      */
     public static function getGenerators(): array
     {
@@ -57,7 +55,7 @@ final class Loader
                 $generatorClasses = [];
             }
 
-            foreach($generatorClasses as $name => $class) {
+            foreach ($generatorClasses as $name => $class) {
                 self::$instances[$name] = new $class();
             }
 
