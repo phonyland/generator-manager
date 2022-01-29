@@ -27,44 +27,15 @@ final class Loader
     private static array $instances = [];
 
     /**
-     * Returns an array of phony generators to execute.
+     * Returns an array of phony generator instances to execute.
      *
-     * @param  string  $interface  the interface for the hook to execute
+     * @return array<string, object> a list of generators
      *
-     * @return array<int, object> list of generators
-     *
-     * @throws \ReflectionException
      */
-    public static function getGenerators(string $interface): array
-    {
-        return array_values(
-            array_filter(
-                self::getGeneratorInstances(),
-                function ($generator) use ($interface): bool {
-                    return $generator instanceof $interface;
-                }
-            )
-        );
-    }
-
-    public static function reset(): void
-    {
-        self::$loaded = false;
-        self::$instances = [];
-    }
-
-    /**
-     * Returns the list of generators instances.
-     *
-     * @return array<int, object>
-     *
-     * @throws \ReflectionException
-     */
-    private static function getGeneratorInstances(): array
+    public static function getGenerators(): array
     {
         if (! self::$loaded) {
-            $cachedGenerators = sprintf('%s/vendor/phonyland-generators.json', getcwd());
-            $container = Container::getInstance();
+            $cachedGenerators = getcwd().'/vendor/phonyland-generators.json';
 
             if (! file_exists($cachedGenerators)) {
                 return [];
@@ -78,22 +49,32 @@ final class Loader
             try {
                 $generatorClasses = json_decode(
                     json: $content,
-                    associative: false,
-                    depth: 1024,
+                    associative: true,
+                    depth: 2,
                     flags: JSON_THROW_ON_ERROR
                 );
             } catch (JsonException) {
                 $generatorClasses = [];
             }
 
-            self::$instances = array_map(
-                callback: static fn ($class) => $container->get($class),
-                array: $generatorClasses
-            );
+            foreach($generatorClasses as $name => $class) {
+                self::$instances[$name] = new $class();
+            }
 
             self::$loaded = true;
         }
 
         return self::$instances;
+    }
+
+    /**
+     * Resets the loaded generators.
+     *
+     * @return void
+     */
+    public static function reset(): void
+    {
+        self::$loaded = false;
+        self::$instances = [];
     }
 }
