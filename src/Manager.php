@@ -24,6 +24,7 @@ final class Manager implements PluginInterface, EventSubscriberInterface, Capabl
 
     private Composer $composer;
 
+    // @phpstan-ignore-next-line
     private IOInterface $io;
 
     /**

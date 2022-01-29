@@ -21,7 +21,7 @@ final class Loader
     /**
      * Holds the list of cached generator instances.
      *
-     * @var array<int, object>
+     * @var array<string, object>
      */
     private static array $instances = [];
 
