@@ -9,7 +9,7 @@ use JsonException;
 /**
  * @internal
  */
-final class Loader
+final class Container
 {
     /**
      * Determines if the generator cache file was loaded.
