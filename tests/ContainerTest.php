@@ -16,31 +16,32 @@ beforeEach(function () {
     );
 });
 
-afterEach(function () {
-    Container::reset();
-});
-
 it('exists')->assertTrue(class_exists(Container::class));
 
 it('returns a single generator instance', function () {
-    $generators = Container::getGenerators();
+    $container = new Container();
 
-    $this->assertCount(3, $generators);
-    $this->assertInstanceOf(SampleOneGenerator::class, $generators['sampleOne']);
-    $this->assertInstanceOf(SampleTwoGenerator::class, $generators['sampleTwo']);
-    $this->assertInstanceOf(SampleThreeGenerator::class, $generators['sampleThree']);
+    $this->assertInstanceOf(SampleOneGenerator::class, $container->get('sampleOne'));
+    $this->assertInstanceOf(SampleTwoGenerator::class, $container->get('sampleTwo'));
+    $this->assertInstanceOf(SampleThreeGenerator::class, $container->get('sampleThree'));
 });
 
-it('return no generators when generator cache file is missing', function () {
-    unlink(getcwd().'/vendor/phonyland-generators.json');
-    $generators = Container::getGenerators();
+it('throws runtime exception when generator cache file is missing', function () {
+    $this->expectException(RuntimeException::class);
 
-    $this->assertEmpty($generators);
+    unlink(getcwd().'/vendor/phonyland-generators.json');
+
+    $container = new Container();
+
+    $container->get('sampleOne');
 });
 
 it('returns no generators when generator cache file does not contain valid json', function () {
-    file_put_contents(getcwd().'/vendor/phonyland-generators.json', 'abcd');
-    $generators = Container::getGenerators();
+    $this->expectException(RuntimeException::class);
 
-    $this->assertEmpty($generators);
+    file_put_contents(getcwd().'/vendor/phonyland-generators.json', 'abcd');
+
+    $container = new Container();
+
+    $container->get('sampleOne');
 });

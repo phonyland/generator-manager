@@ -4,62 +4,73 @@ declare(strict_types=1);
 
 namespace Phonyland\GeneratorManager;
 
-use JsonException;
+use Exception;
+use RuntimeException;
 
 final class Container
 {
-    /**
-     * Determines if the generator cache file was loaded.
-     *
-     * @var bool
-     */
-    private static bool $loaded = false;
-
     /**
      * Holds the list of cached generator instances.
      *
      * @var array<string, object>
      */
-    private static array $instances = [];
+    private array $instances = [];
+
+    public function __construct()
+    {
+        $this->load();
+    }
 
     /**
-     * Returns an array of phony generator instances to execute.
+     * Returns a generator instance for given name.
      *
-     * @return array<string, object> a list of generators
+     * @param  string  $name
+     *
+     * @return mixed
+     *
+     * @throws \Exception
      */
-    public static function getGenerators(): array
+    public function get(string $name): mixed
     {
-        if (! self::$loaded) {
-            $cachedGenerators = getcwd().'/vendor/phonyland-generators.json';
-
-            if (! file_exists($cachedGenerators)) {
-                return [];
-            }
-
-            $content = file_get_contents($cachedGenerators);
-            if ($content === false) {
-                return [];
-            }
-
-            try {
-                $generatorClasses = json_decode(
-                    json: $content,
-                    associative: true,
-                    depth: 2,
-                    flags: JSON_THROW_ON_ERROR
-                );
-            } catch (JsonException) {
-                $generatorClasses = [];
-            }
-
-            foreach ($generatorClasses as $name => $class) {
-                self::$instances[$name] = new $class();
-            }
-
-            self::$loaded = true;
+        if (! isset($this->instances[$name])) {
+            throw new RuntimeException("Generator '$name' not found.");
         }
 
-        return self::$instances;
+        return $this->instances[$name];
+    }
+
+    /**
+     * Loads Phony generators from cache file.
+     *
+     * @return void
+     */
+    public function load(): void
+    {
+        $cachedGenerators = getcwd().'/vendor/phonyland-generators.json';
+
+        if (! file_exists($cachedGenerators)) {
+            return;
+        }
+
+        $content = file_get_contents($cachedGenerators);
+        if ($content === false) {
+            return;
+        }
+
+        try {
+            $generatorClasses = json_decode(
+                json: $content,
+                associative: true,
+                depth: 2,
+                flags: JSON_THROW_ON_ERROR
+            );
+
+            foreach ($generatorClasses as $name => $class) {
+                $this->instances[$name] = new $class();
+            }
+        } catch (Exception) {
+            return;
+        }
     }
 
     /**
@@ -67,9 +78,19 @@ final class Container
      *
      * @return void
      */
-    public static function reset(): void
+    public function reset(): void
     {
-        self::$loaded = false;
-        self::$instances = [];
+        $this->instances = [];
+    }
+
+    /**
+     * Resets and reloads the generator instances.
+     *
+     * @return void
+     */
+    public function reload(): void
+    {
+        $this->reset();
+        $this->load();
     }
 }
