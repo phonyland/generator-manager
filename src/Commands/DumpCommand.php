@@ -17,7 +17,7 @@ final class DumpCommand extends BaseCommand
 {
     protected function configure(): void
     {
-        $this->setName('phonyland:dump-generators');
+        $this->setName('phonyland:reload-generators');
     }
 
     /**
