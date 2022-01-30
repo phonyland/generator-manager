@@ -10,7 +10,7 @@ use RuntimeException;
 final class Container
 {
     /**
-     * Holds the list of cached generator instances.
+     * Holds the list of cached Phony generator instances.
      *
      * @var array<string, object>
      */
@@ -22,7 +22,7 @@ final class Container
     }
 
     /**
-     * Returns a generator instance for given name.
+     * Returns a Phony generator instance for the given name.
      *
      * @param  string  $name
      *
@@ -40,7 +40,19 @@ final class Container
     }
 
     /**
-     * Loads Phony generators from cache file.
+     * Returns if a Phony generator instance exists for the given name.
+     *
+     * @param  string  $name
+     *
+     * @return bool
+     */
+    public function has(string $name): bool
+    {
+        return isset($this->instances[$name]);
+    }
+
+    /**
+     * Loads Phony generators from the cache file.
      *
      * @return void
      */
@@ -74,7 +86,7 @@ final class Container
     }
 
     /**
-     * Resets the loaded generators.
+     * Resets the loaded Phony generators.
      *
      * @return void
      */
@@ -84,7 +96,7 @@ final class Container
     }
 
     /**
-     * Resets and reloads the generator instances.
+     * Resets and reloads the Phony generator instances.
      *
      * @return void
      */
