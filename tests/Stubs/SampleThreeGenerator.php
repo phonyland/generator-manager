@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Phonyland\GeneratorManager\Tests\Stubs;
 
-class SampleThreeGenerator
+use Phonyland\GeneratorManager\Generator;
+
+class SampleThreeGenerator extends Generator
 {
 }
