@@ -12,7 +12,7 @@ final class Container
     /**
      * Holds the list of cached Phony generator instances.
      *
-     * @var array<string, object>
+     * @var array<string, \Phonyland\GeneratorManager\Generator>
      */
     private array $instances = [];
 
@@ -26,11 +26,11 @@ final class Container
      *
      * @param  string  $name
      *
-     * @return mixed
+     * @return Generator
      *
      * @throws \Exception
      */
-    public function get(string $name): mixed
+    public function get(string $name): Generator
     {
         if (! isset($this->instances[$name])) {
             throw new RuntimeException("Generator '$name' not found.");
