@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Phonyland\GeneratorManager;
 
 use Exception;
+use Phonyland\Framework\Phony;
 use RuntimeException;
 
 final class Container
@@ -16,8 +17,9 @@ final class Container
      */
     private array $instances = [];
 
-    public function __construct()
-    {
+    public function __construct(
+        protected Phony $phony
+    ) {
         $this->load();
     }
 
@@ -78,7 +80,7 @@ final class Container
             );
 
             foreach ($generatorClasses as $name => $class) {
-                $this->instances[$name] = new $class();
+                $this->instances[$name] = new $class($this->phony);
             }
         } catch (Exception) {
             return;
