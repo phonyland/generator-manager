@@ -19,7 +19,7 @@ beforeEach(function () {
 it('exists')->assertTrue(class_exists(Container::class));
 
 it('returns a single generator instance', function () {
-    $container = new Container();
+    $container = new Container(🙃());
 
     $this->assertInstanceOf(SampleOneGenerator::class, $container->get('sampleOne'));
     $this->assertInstanceOf(SampleTwoGenerator::class, $container->get('sampleTwo'));
@@ -31,7 +31,7 @@ it('throws runtime exception when generator cache file is missing', function () 
 
     unlink(getcwd().'/vendor/phonyland-generators.json');
 
-    $container = new Container();
+    $container = new Container(🙃());
 
     $container->get('sampleOne');
 });
@@ -41,7 +41,7 @@ it('returns no generators when generator cache file does not contain valid json'
 
     file_put_contents(getcwd().'/vendor/phonyland-generators.json', 'abcd');
 
-    $container = new Container();
+    $container = new Container(🙃());
 
     $container->get('sampleOne');
 });
