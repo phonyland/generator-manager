@@ -5,6 +5,12 @@ declare(strict_types=1);
 use Composer\Package\CompletePackage;
 use Composer\Package\Link;
 use Composer\Semver\Constraint\Constraint;
+use Phonyland\Framework\Phony;
+
+function 🙃(): Phony
+{
+    return new Phony();
+}
 
 /**
  * Creates the generator requirement in the composer instance.
