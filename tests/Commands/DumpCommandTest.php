@@ -18,8 +18,8 @@ beforeEach(function () {
 
 it('exists')->assertTrue(class_exists(DumpCommand::class));
 
-it('should find a single generator with one generator class', function () {
-    fakeGenerator('phonyland/sample-one-generator', [SampleOneGenerator::class]);
+it('should find a single generator with the generator class', function () {
+    fakeGenerator('phonyland/sample-one-generator', SampleOneGenerator::class, 'sampleOne');
 
     $this->dump->run(new ArrayInput([]), new NullOutput());
 
@@ -30,28 +30,14 @@ it('should find a single generator with one generator class', function () {
         flags: JSON_THROW_ON_ERROR
     );
 
-    $this->assertContains(SampleOneGenerator::class, $generators);
-});
-
-it('should find a single generator with multiple generator classes', function () {
-    fakeGenerator('phonyland/sample-one-generator', [SampleOneGenerator::class, SampleTwoGenerator::class]);
-
-    $this->dump->run(new ArrayInput([]), new NullOutput());
-
-    $generators = json_decode(
-        json: file_get_contents('vendor/phonyland-generators.json'),
-        associative: true,
-        depth: 1024,
-        flags: JSON_THROW_ON_ERROR
-    );
-
-    expect($generators)->toMatchArray(['sample_one' => SampleOneGenerator::class]);
-    expect($generators)->toMatchArray(['sample_two' => SampleTwoGenerator::class]);
+    $this->assertEquals(SampleOneGenerator::class, $generators['sampleOne']['class']);
+    $this->assertEquals('sampleOne', $generators['sampleOne']['alias']);
+    $this->assertEquals([], $generators['sampleOne']['data']);
 });
 
 it('should find multiple generators', function () {
-    fakeGenerator('phonyland/sample-one-generator', [SampleOneGenerator::class]);
-    fakeGenerator('phonyland/sample-two-generator', [SampleTwoGenerator::class]);
+    fakeGenerator('phonyland/sample-one-generator', SampleOneGenerator::class, 'sampleOne');
+    fakeGenerator('phonyland/sample-two-generator', SampleTwoGenerator::class, 'sampleTwo');
 
     $this->dump->run(new ArrayInput([]), new NullOutput());
 
@@ -62,14 +48,20 @@ it('should find multiple generators', function () {
         flags: JSON_THROW_ON_ERROR
     );
 
-    expect($generators)->toMatchArray(['sample_one' => SampleOneGenerator::class]);
-    expect($generators)->toMatchArray(['sample_two' => SampleTwoGenerator::class]);
+    $this->assertEquals(SampleOneGenerator::class, $generators['sampleOne']['class']);
+    $this->assertEquals('sampleOne', $generators['sampleOne']['alias']);
+    $this->assertEquals([], $generators['sampleOne']['data']);
+
+    $this->assertEquals(SampleTwoGenerator::class, $generators['sampleTwo']['class']);
+    $this->assertEquals('sampleTwo', $generators['sampleTwo']['alias']);
+    $this->assertEquals([], $generators['sampleTwo']['data']);
 });
 
 it('should find a dev generator', function () {
     fakeGenerator(
-        generatorName: 'phonyland/sample-one-generator',
-        classes: [SampleOneGenerator::class],
+        packageName: 'phonyland/sample-one-generator',
+        class: SampleOneGenerator::class,
+        alias: 'sampleOne',
         dev: true
     );
 
@@ -82,7 +74,7 @@ it('should find a dev generator', function () {
         flags: JSON_THROW_ON_ERROR
     );
 
-    expect($generators)->toMatchArray(['sample_one' => SampleOneGenerator::class]);
+    $this->assertEquals(SampleOneGenerator::class, $generators['sampleOne']['class']);
 });
 
 it('should find a generator during development', function () {
@@ -90,8 +82,9 @@ it('should find a generator during development', function () {
     $extra = $composer->getPackage()->getExtra();
 
     $extra['phonyland'] = [
-        'generators' => [
-            SampleThreeGenerator::class,
+        'generator' => [
+            'class' => SampleThreeGenerator::class,
+            'alias' => 'sampleThree',
         ],
     ];
 
@@ -106,5 +99,7 @@ it('should find a generator during development', function () {
         flags: JSON_THROW_ON_ERROR
     );
 
-    expect($generators)->toMatchArray(['sample_three' => SampleThreeGenerator::class]);
+    $this->assertEquals(SampleThreeGenerator::class, $generators['sampleThree']['class']);
+    $this->assertEquals('sampleThree', $generators['sampleThree']['alias']);
+    $this->assertEquals([], $generators['sampleThree']['data']);
 });

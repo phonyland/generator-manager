@@ -39,24 +39,17 @@ final class DumpCommand extends BaseCommand
 
         /** @var \Composer\Package\PackageInterface $package */
         foreach ($packages as $package) {
-            if (! isset($package->getExtra()['phonyland']['generators'])) {
+            if (! isset($package->getExtra()['phonyland']['generator'])) {
                 continue;
             }
 
-            $classNames = $package->getExtra()['phonyland']['generators'];
+            $extra = $package->getExtra()['phonyland']['generator'];
 
-            // TODO: Refactor alias extraction
-            foreach ($classNames as $className) {
-                $alias = strtolower(
-                    preg_replace(
-                        ['/([A-Z]+)/', '/_([A-Z]+)([A-Z][a-z])/'],
-                        ['_$1', '_$1_$2'],
-                        lcfirst(str_replace('Generator', '', substr(strrchr($className, '\\'), 1)))
-                    )
-                );
-
-                $generators[$alias] = $className;
-            }
+            $generators[$extra['alias']] = [
+                'class' => $extra['class'],
+                'alias' => $extra['alias'],
+                'data'  => $extra['data'] ?? [],
+            ];
         }
 
         file_put_contents(

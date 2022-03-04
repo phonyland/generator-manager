@@ -15,14 +15,21 @@ function 🙃(): Phony
 /**
  * Creates the generator requirement in the composer instance.
  *
- * @param  string              $generatorName  the name of the generator to fake
- * @param  array<int, string>  $classes        generator classes to load
- * @param  bool                $dev            determines if it should be added as a dev dependency
+ * @param  string         $packageName  the name of the generator package to fake
+ * @param  string         $class        generator class to load
+ * @param  string         $alias        the alias to use for the generator
+ * @param  array<string>  $data         the data packages for the generator.
+ * @param  bool           $dev          determines if it should be added as a dev dependency
  *
  * @throws \Throwable
  */
-function fakeGenerator(string $generatorName, array $classes, bool $dev = false): void
-{
+function fakeGenerator(
+    string $packageName,
+    string $class,
+    string $alias,
+    array $data = [],
+    bool $dev = false
+): void {
     $test = test();
 
     $requires = $dev
@@ -31,12 +38,12 @@ function fakeGenerator(string $generatorName, array $classes, bool $dev = false)
 
     $link = new Link(
         'phonyland/generator-manager',
-        $generatorName,
+        $packageName,
         new Constraint('=', '9999999-dev'),
         'requires',
         'dev-master'
     );
-    $requires[$generatorName] = $link;
+    $requires[$packageName] = $link;
 
     if ($dev) {
         $test->composer->getPackage()->setDevRequires($requires);
@@ -45,10 +52,14 @@ function fakeGenerator(string $generatorName, array $classes, bool $dev = false)
     }
 
     $repository = $test->composer->getRepositoryManager()->getLocalRepository();
-    $package = new CompletePackage($generatorName, '9999999-dev', 'dev-master');
+    $package = new CompletePackage($packageName, '9999999-dev', 'dev-master');
     $package->setExtra([
         'phonyland' => [
-            'generators' => $classes,
+            'generator' => [
+                'class' => $class,
+                'alias' => $alias,
+                'data'  => $data,
+            ],
         ],
     ]);
     $repository->addPackage($package);

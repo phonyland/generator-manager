@@ -17,6 +17,13 @@ final class Container
      */
     private array $instances = [];
 
+    /**
+     * Holds the list of data packages for the generators.
+     *
+     * @var array<string, string>
+     */
+    private array $dataPackages = [];
+
     public function __construct(
         protected Phony $phony
     ) {
@@ -75,12 +82,18 @@ final class Container
             $generatorClasses = json_decode(
                 json: $content,
                 associative: true,
-                depth: 2,
+                depth: 4,
                 flags: JSON_THROW_ON_ERROR
             );
 
-            foreach ($generatorClasses as $name => $class) {
-                $this->instances[$name] = new $class($this->phony);
+            foreach ($generatorClasses as $generator) {
+                $this->instances[$generator['alias']] = new $generator['class']($this->phony);
+
+                if (! isset($this->dataPackages[$generator['alias']])) {
+                    $this->dataPackages[$generator['alias']] = [];
+                }
+
+                $this->dataPackages[$generator['alias']] += $generator['data'] ?? [];
             }
         } catch (Exception) {
             return;
@@ -95,6 +108,7 @@ final class Container
     public function reset(): void
     {
         $this->instances = [];
+        $this->dataPackages = [];
     }
 
     /**
