@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Phonyland\GeneratorManager;
 
 use Exception;
+use Phonyland\Framework\Generator;
 use Phonyland\Framework\Phony;
 use RuntimeException;
 
@@ -13,7 +14,7 @@ final class Container
     /**
      * Holds the list of cached Phony generator instances.
      *
-     * @var array<string, \Phonyland\GeneratorManager\Generator>
+     * @var array<string, \Phonyland\Framework\Generator>
      */
     private array $instances = [];
 
