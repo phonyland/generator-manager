@@ -42,7 +42,7 @@ final class Manager implements PluginInterface, EventSubscriberInterface, Capabl
     public function uninstall(Composer $composer, IOInterface $io): void
     {
         $vendorDirectory = $composer->getConfig()->get('vendor-dir');
-        $generatorCacheFile = $vendorDirectory.'/'.self::GENERATOR_CACHE_FILE;
+        $generatorCacheFile = $vendorDirectory . '/' . self::GENERATOR_CACHE_FILE;
 
         if (file_exists($generatorCacheFile)) {
             unlink($generatorCacheFile);

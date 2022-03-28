@@ -68,7 +68,7 @@ it('returns a single generator instance', function () {
 it('throws runtime exception when generator cache file is missing', function () {
     $this->expectException(RuntimeException::class);
 
-    unlink(getcwd().'/vendor/phonyland-generators.json');
+    unlink(getcwd() . '/vendor/phonyland-generators.json');
 
     $container = new Container(🙃());
 
@@ -78,7 +78,7 @@ it('throws runtime exception when generator cache file is missing', function () 
 it('returns no generators when generator cache file does not contain valid json', function () {
     $this->expectException(RuntimeException::class);
 
-    file_put_contents(getcwd().'/vendor/phonyland-generators.json', 'abcd');
+    file_put_contents(getcwd() . '/vendor/phonyland-generators.json', 'abcd');
 
     $container = new Container(🙃());
 

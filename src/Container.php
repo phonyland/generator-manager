@@ -68,7 +68,7 @@ final class Container
      */
     public function load(): void
     {
-        $cachedGenerators = getcwd().'/vendor/phonyland-generators.json';
+        $cachedGenerators = getcwd() . '/vendor/phonyland-generators.json';
 
         if (! file_exists($cachedGenerators)) {
             return;
