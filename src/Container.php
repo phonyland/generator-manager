@@ -43,7 +43,7 @@ final class Container
     public function get(string $name): Generator
     {
         if (! isset($this->instances[$name])) {
-            throw new RuntimeException("Generator '$name' not found.");
+            throw new RuntimeException("Phony Generator '$name' not found.");
         }
 
         return $this->instances[$name];
