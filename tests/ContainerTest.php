@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Composer\Factory;
 use Composer\IO\NullIO;
 use Phonyland\GeneratorManager\Commands\DumpCommand;
