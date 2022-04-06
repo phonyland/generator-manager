@@ -81,13 +81,15 @@ final class Container
             );
 
             foreach ($generatorClasses as $generator) {
-                $this->instances[$generator['alias']] = new $generator['class']($this->phony);
+                /** @var Generator $generatorInstance */
+                $generatorInstance = new $generator['class'](
+                    alias: $generator['alias'],
+                    phony: $this->phony
+                );
 
-                if (! isset($this->dataPackages[$generator['alias']])) {
-                    $this->dataPackages[$generator['alias']] = [];
-                }
+                $generatorInstance->setDataPackages($generator['data'] ?? []);
 
-                $this->dataPackages[$generator['alias']] += $generator['data'] ?? [];
+                $this->instances[$generator['alias']] = $generatorInstance;
             }
         } catch (Exception) {
             return;
