@@ -18,13 +18,6 @@ final class Container
      */
     private array $instances = [];
 
-    /**
-     * Holds the list of data packages for the generators.
-     *
-     * @var array<string, string>
-     */
-    private array $dataPackages = [];
-
     public function __construct(
         protected Phony $phony
     ) {
