@@ -104,7 +104,6 @@ final class Container
     public function reset(): void
     {
         $this->instances = [];
-        $this->dataPackages = [];
     }
 
     /**
