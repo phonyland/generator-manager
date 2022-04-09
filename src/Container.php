@@ -55,6 +55,19 @@ final class Container
     }
 
     /**
+     * Sets a generator instance to the container with an alias.
+     *
+     * @param  string                          $alias
+     * @param  \Phonyland\Framework\Generator  $generator
+     *
+     * @return void
+     */
+    public function set(string $alias, Generator $generator): void
+    {
+        $this->instances[$alias] = $generator;
+    }
+
+    /**
      * Loads Phony generators from the cache file.
      *
      * @return void
