@@ -33,6 +33,7 @@ it('should find a single generator with the generator class', function () {
     );
 
     $this->assertEquals(SampleOneGenerator::class, $generators['sampleOne']['class']);
+    $this->assertEquals('phonyland/sample-one-generator', $generators['sampleOne']['name']);
     $this->assertEquals('sampleOne', $generators['sampleOne']['alias']);
     $this->assertEquals([], $generators['sampleOne']['data']);
 });
@@ -51,10 +52,11 @@ it('should find multiple generators', function () {
     );
 
     $this->assertEquals(SampleOneGenerator::class, $generators['sampleOne']['class']);
-    $this->assertEquals('sampleOne', $generators['sampleOne']['alias']);
+    $this->assertEquals('phonyland/sample-one-generator', $generators['sampleOne']['name']);
     $this->assertEquals([], $generators['sampleOne']['data']);
 
     $this->assertEquals(SampleTwoGenerator::class, $generators['sampleTwo']['class']);
+    $this->assertEquals('phonyland/sample-two-generator', $generators['sampleTwo']['name']);
     $this->assertEquals('sampleTwo', $generators['sampleTwo']['alias']);
     $this->assertEquals([], $generators['sampleTwo']['data']);
 });
@@ -77,6 +79,7 @@ it('should find a dev generator', function () {
     );
 
     $this->assertEquals(SampleOneGenerator::class, $generators['sampleOne']['class']);
+    $this->assertEquals('phonyland/sample-one-generator', $generators['sampleOne']['name']);
 });
 
 it('should find a generator during development', function () {

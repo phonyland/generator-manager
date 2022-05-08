@@ -47,6 +47,7 @@ final class DumpCommand extends BaseCommand
 
             $generators[$extra['alias']] = [
                 'class' => $extra['class'],
+                'name'  => $package->getName(),
                 'alias' => $extra['alias'],
                 'data'  => $extra['data'] ?? [],
             ];

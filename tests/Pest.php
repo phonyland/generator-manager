@@ -57,6 +57,7 @@ function fakeGenerator(
         'phonyland' => [
             'generator' => [
                 'class' => $class,
+                'name'  => $packageName,
                 'alias' => $alias,
                 'data'  => $data,
             ],
