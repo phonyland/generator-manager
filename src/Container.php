@@ -97,7 +97,8 @@ final class Container
                 /** @var Generator $generatorInstance */
                 $generatorInstance = new $generator['class'](
                     alias: $generator['alias'],
-                    phony: $this->phony
+                    name: $generator['name'],
+                    phony: $this->phony,
                 );
 
                 $generatorInstance->setDataPackages($generator['data'] ?? []);
